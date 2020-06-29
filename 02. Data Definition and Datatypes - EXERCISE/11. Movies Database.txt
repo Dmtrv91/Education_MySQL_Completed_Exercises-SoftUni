@@ -1,0 +1,60 @@
+CREATE DATABASE movies;
+USE movies;
+
+CREATE TABLE directors (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    director_name VARCHAR(100) NOT NULL,
+    notes TEXT
+);
+
+CREATE TABLE genres (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    genre_name VARCHAR(100) NOT NULL,
+    notes TEXT
+);
+
+CREATE TABLE categories (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    category_name VARCHAR(100) NOT NULL,
+    notes TEXT
+);
+
+CREATE TABLE movies (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    title VARCHAR(300) NOT NULL,
+    director_id INT NOT NULL,
+    copyright_year YEAR NOT NULL,
+    length DOUBLE(5,2) NOT NULL,
+    genre_id INT NOT NULL,
+    category_id INT NOT NULL,
+    rating DOUBLE(5,2) NOT NULL,
+    notes TEXT
+);
+
+INSERT INTO directors (id, director_name, notes)  VALUE 
+(1, 'director_name1', 'notes1'),
+(2, 'director_name2', 'notes2'),
+(3, 'director_name3', 'notes3'),
+(4, 'director_name4', 'notes4'),
+(5, 'director_name5', 'notes5');
+
+INSERT INTO genres (id, genre_name, notes)  VALUE 
+(1, 'genre_name1', 'notes1'),
+(2, 'genre_name2', 'notes2'),
+(3, 'genre_name3', 'notes3'),
+(4, 'genre_name4', 'notes4'),
+(5, 'genre_name5', 'notes5');
+
+INSERT INTO categories (id, category_name, notes)  VALUE 
+(1, 'category_name1', 'notes1'),
+(2, 'category_name2', 'notes2'),
+(3, 'category_name3', 'notes3'),
+(4, 'category_name4', 'notes4'),
+(5, 'category_name5', 'notes5');
+
+INSERT INTO movies (id, title, director_id, copyright_year, length, genre_id, category_id, rating, notes)  VALUE 
+(1, 'title1', 2, 2000, 50.20, 3, 4, 5.5, 'notes1'),
+(2, 'title1', 3, 2000, 50.20, 4, 5, 5.5, 'notes2'),
+(3, 'title1', 4, 2000, 50.20, 5, 1, 5.5, 'notes3'),
+(4, 'title1', 5, 2000, 50.20, 1, 2, 5.5, 'notes4'),
+(5, 'title1', 1, 2000, 50.20, 2, 3, 5.5, 'notes5');

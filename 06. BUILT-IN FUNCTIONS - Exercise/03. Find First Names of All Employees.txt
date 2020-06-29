@@ -1,0 +1,5 @@
+USE soft_uni;
+
+SELECT first_name FROM employees 
+WHERE (department_id = 10 OR department_id = 3) 
+AND (YEAR(hire_date) >= 1995 AND YEAR(hire_date)<=2005);

@@ -1,0 +1,4 @@
+USE soft_uni;
+
+SELECT concat(e.first_name, '.', e.last_name, '@', 'softuni.bg') AS 'full_email_addres'
+FROM employees AS e;

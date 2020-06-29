@@ -1,0 +1,5 @@
+USE geography;
+
+SELECT country_name,iso_code FROM countries
+WHERE lower(LENGTH(country_name) - LENGTH(REPLACE(country_name, 'a', ''))+1) >= 3
+ORDER BY iso_code;

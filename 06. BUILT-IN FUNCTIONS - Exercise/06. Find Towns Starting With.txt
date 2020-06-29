@@ -1,0 +1,5 @@
+USE soft_uni;
+
+SELECT town_id, name FROM towns
+WHERE SUBSTRING(name, 1, 1) = "M" or SUBSTRING(name, 1, 1) = "K" or SUBSTRING(name, 1, 1) = "B" or SUBSTRING(name, 1, 1) = "E"
+ORDER BY name ASC;

@@ -1,0 +1,247 @@
+
+
+-------------01. Records’ Count--------------
+
+
+USE gringotts; 
+
+SELECT COUNT(id) AS 'count' FROM wizzard_deposits;
+
+
+-------------02. Longest Magic Wand-------------
+
+
+USE gringotts; 
+
+SELECT MAX(magic_wand_size) AS 'longest_magic_wand' FROM wizzard_deposits;
+
+
+-------------03. Longest Magic Wand per Deposit Groups-------------
+
+
+USE gringotts; 
+
+SELECT deposit_group, MAX(magic_wand_size) AS 'longest_magic_wand' 
+FROM wizzard_deposits
+GROUP BY deposit_group
+ORDER BY MAX(magic_wand_size), deposit_group;
+
+
+-------------04. Smallest Deposit Group per Magic Wand Size-------------
+
+
+USE gringotts; 
+
+ SELECT deposit_group FROM
+(SELECT deposit_group, AVG(magic_wand_size) AS avrage_magic_wand_size
+  FROM wizzard_deposits
+  GROUP BY deposit_group) as avgm
+  WHERE avrage_magic_wand_size = ( SELECT MIN(avrage_magic_wand_size) min_average_magic_wand_size 
+	FROM
+	(SELECT deposit_group, AVG(magic_wand_size) AS avrage_magic_wand_size
+	FROM wizzard_deposits
+	GROUP BY deposit_group) AS av);
+
+
+
+-------------05. Deposits Sum-------------
+
+
+USE gringotts; 
+
+SELECT deposit_group, SUM(deposit_amount) AS 'total_sum' FROM wizzard_deposits
+GROUP BY deposit_group
+ORDER BY SUM(deposit_amount);
+
+
+-------------06. Deposits Sum for Ollivander Family-------------
+
+
+USE gringotts; 
+
+SELECT deposit_group, SUM(deposit_amount) AS 'total_sum' FROM wizzard_deposits
+WHERE magic_wand_creator= 'Ollivander family'
+GROUP BY deposit_group
+ORDER BY deposit_group;
+
+
+-------------07. Deposits Filter-------------
+
+
+USE gringotts; 
+
+SELECT deposit_group, SUM(deposit_amount) AS 'total_sum' FROM wizzard_deposits
+WHERE magic_wand_creator= 'Ollivander family'
+GROUP BY deposit_group
+having total_sum < 150000
+ORDER BY total_sum DESC;
+
+
+-------------08. Deposit Charge-------------
+
+
+USE gringotts; 
+
+SELECT deposit_group, magic_wand_creator, MIN(deposit_charge) AS 'min_deposit_charge' FROM wizzard_deposits
+GROUP BY magic_wand_creator, deposit_group
+ORDER BY magic_wand_creator, deposit_group;
+
+
+-------------09. Age Groups-------------
+
+
+USE gringotts; 
+
+SELECT 
+	(CASE 
+		WHEN age BETWEEN 0 AND 10 THEN '[0-10]'
+		WHEN age BETWEEN 11 AND 20 THEN '[11-20]'
+		WHEN age BETWEEN 21 AND 30 THEN '[21-30]'
+               	WHEN age BETWEEN 31 AND 40 THEN '[31-40]'
+		WHEN age BETWEEN 41 AND 50 THEN '[41-50]'
+                WHEN age BETWEEN 51 AND 60 THEN '[51-60]'
+                ELSE '[61+]'
+	END) AS `age_group`,
+	COUNT(id) AS `wizard_count`
+FROM wizzard_deposits
+GROUP BY age_group
+ORDER BY wizard_count;
+
+
+-------------10. First Letter-------------
+
+
+USE gringotts; 
+
+SELECT DISTINCT SUBSTRING(first_name,1,1) AS `first_letter` FROM wizzard_deposits
+WHERE deposit_group ='Troll Chest'
+ORDER BY first_letter;
+
+
+-------------11. Average Interest-------------
+
+
+USE gringotts; 
+
+select deposit_group,is_deposit_expired,avg(deposit_interest) as average_interest from wizzard_deposits
+where deposit_start_date>'1985-01-01'
+group by deposit_group,is_deposit_expired
+ORDER BY deposit_group DESC,is_deposit_expired ASC
+
+
+-------------12. Rich Wizard, Poor Wizard-------------
+
+
+USE gringotts; 
+
+CREATE VIEW rw_pw AS
+SELECT w1.first_name AS host_wizzard, w1.deposit_amount AS host_wizzard_deposit
+,w2.first_name AS guest_wizzard, w2.deposit_amount AS guest_wizzard_deposit
+FROM wizzard_deposits AS w1, wizzard_deposits AS w2
+WHERE w1.id + 1 = w2.id;
+SELECT SUM(host_wizzard_deposit - guest_wizzard_deposit)
+FROM rw_pw;
+
+
+-------------13. Employees Minimum Salaries-------------
+
+
+USE soft_uni;
+
+SELECT department_id,  MIN(salary) AS `minimum_salary` FROM employees
+WHERE hire_date > '2000-01-01'
+GROUP BY department_id
+HAVING department_id IN (2,5,7);
+
+
+-------------14. Employees Average Salaries-------------
+
+
+USE soft_uni;
+
+CREATE TABLE NewTable SELECT * FROM Employees
+WHERE salary > 30000;
+
+DELETE FROM NewTable
+WHERE manager_id = 42;
+
+UPDATE NewTable
+SET Salary = Salary + 5000
+WHERE department_id = 1;
+
+SELECT department_id, AVG(salary) AS avg_salary
+FROM NewTable
+GROUP BY department_id
+ORDER BY department_id;
+
+
+-------------15. Employees Maximum Salaries-------------
+
+
+USE soft_uni;
+
+SELECT department_id, MAX(salary) AS max_salary 
+FROM employees	
+GROUP BY department_id
+HAVING NOT MAX(salary) BETWEEN 30000 AND 70000
+ORDER BY department_id ASC;
+
+
+-------------16. Employees Count Salaries-------------
+
+
+USE soft_uni;
+
+SELECT COUNT(salary) AS count FROM employees	
+WHERE manager_id IS NULL;
+
+
+-------------17. 3rd Highest Salary-------------
+
+
+USE soft_uni;
+
+SELECT e.department_id, MAX(salary) AS third_max_salary
+ FROM employees AS e
+ JOIN
+(SELECT e.department_id, MAX(salary) as second_max_salary 
+  FROM employees AS e
+JOIN
+(SELECT department_id, MAX(salary) as max_salary 
+   FROM employees
+  GROUP BY department_id) AS max_salary
+    ON e.department_id = max_salary.department_id
+   AND e.salary < max_salary.max_salary
+ GROUP BY e.department_id) second_max_salary
+    ON e.department_id = second_max_salary.department_id
+   AND e.salary < second_max_salary.second_max_salary
+GROUP BY e.department_id
+ORDER BY department_id;
+
+
+-------------18. Salary Challenge-------------
+
+
+USE soft_uni;
+
+SELECT e.first_name, e.last_name, e.department_id
+FROM employees AS e, (SELECT e.department_id, AVG(e.salary) AS avg_salary
+                    FROM employees AS e
+                    GROUP BY e.department_id
+                    ) AS avg_salary_by_dep
+WHERE e.department_id = avg_salary_by_dep.department_id
+AND e.salary > avg_salary_by_dep.avg_salary
+ORDER BY e.department_id ASC
+LIMIT 10;
+
+
+-------------19. Departments Total Salaries-------------
+
+
+USE soft_uni;
+
+SELECT department_id, SUM(salary) AS 'total_salary' FROM employees
+GROUP BY department_id
+ORDER BY department_id ASC;
+
+

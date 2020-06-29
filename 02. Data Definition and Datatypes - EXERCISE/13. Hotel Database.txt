@@ -1,0 +1,112 @@
+CREATE DATABASE hotel;
+USE hotel;
+
+CREATE TABLE employees(
+id INT PRIMARY KEY NOT NULL,
+first_name VARCHAR(50) NOT NULL,
+last_name VARCHAR(50) NOT NULL,
+title VARCHAR(50) NOT NULL,
+notes BLOB
+);
+ 
+ CREATE TABLE customers(
+account_number INT PRIMARY KEY NOT NULL,
+first_Name VARCHAR(50) NOT NULL,
+last_name VARCHAR(50) NOT NULL,
+phone_number VARCHAR(50) NOT NULL,
+emergency_name VARCHAR(150) NOT NULL,
+emergency_number VARCHAR(50) NOT NULL,
+notes BLOB
+);
+
+CREATE TABLE room_status(
+room_status INT PRIMARY KEY NOT NULL,
+notes BLOB
+);
+
+CREATE TABLE room_types(
+room_type INT PRIMARY KEY NOT NULL,
+notes BLOB NOT NULL
+);
+
+CREATE TABLE bed_types(
+bed_type INT PRIMARY KEY NOT NULL,
+notes BLOB NOT NULL
+);
+
+CREATE TABLE rooms (
+room_number INT(20) PRIMARY KEY NOT NULL,
+room_type VARCHAR(50) NOT NULL,
+bed_type VARCHAR(50) NOT NULL,
+rate DECIMAL NOT NULL,
+room_status VARCHAR(50) NOT NULL,
+notes BLOB NOT NULL
+);
+
+CREATE TABLE payments(
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+employee_id INT(20) NOT NULL,
+payment_date DATE,
+account_number VARCHAR(50) NOT NULL,
+first_date_occupied DATE NOT NULL,
+last_date_occupied DATE NOT NULL,
+total_days INT(20) NOT NULL,
+amount_charged DECIMAL,
+tax_rate DECIMAL,
+tax_amount DECIMAL,
+payment_total DECIMAL NOT NULL,
+notes BLOB NOT NULL
+);
+
+CREATE TABLE occupancies(
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+employee_id INT NOT NULL,
+date_occupied DATE NOT NULL,
+account_number VARCHAR(50) NOT NULL,
+room_number INT(20) NOT NULL,
+rate_applied DECIMAL,
+phone_charge DECIMAL,
+notes BLOB NOT NULL
+);
+
+INSERT INTO employees (id, first_name, last_name, title, notes) VALUES
+(1, 'first_name1', 'last_name1', 'title1', 'notes1'),
+(2, 'first_name2', 'last_name2', 'title2', 'notes2'),
+(3, 'first_name3', 'last_name3', 'title3', 'notes3');
+ 
+INSERT INTO customers (account_number, first_name, last_name, phone_number, emergency_name, emergency_number, notes) VALUES
+(1, 'first_name1', 'last_name1', '1', 'emergency_name1', '1', 'notes1'),
+(2, 'first_name2', 'last_name2', '2', 'emergency_name2', '2', 'notes2'),
+(3, 'first_name3', 'last_name3', '3', 'emergency_name3', '3', 'notes3');
+ 
+INSERT INTO room_status (room_status, notes) VALUES
+(1, 'notes1'),
+(2, 'notes2'),
+(3, 'notes3');
+ 
+INSERT INTO room_types (room_type, notes) VALUES
+(1, 'notes1'),
+(2, 'notes2'),
+(3, 'notes3');
+ 
+INSERT INTO bed_types (bed_type, notes) VALUES
+(1, 'notes1'),
+(2, 'notes2'),
+(3, 'notes3');
+ 
+INSERT INTO rooms (room_number, room_type, bed_type, rate, room_status, notes) VALUES
+(1,'Free', 'bed_type1', 1, 'room_status1', 'notes1'),
+(2,'Free', 'bed_type2', 2, 'room_status2', 'notes2'),
+(3,'Free', 'bed_type3', 3, 'room_status3', 'notes3');
+ 
+ 
+INSERT INTO payments (id, employee_id, payment_date, account_number, first_date_occupied, last_date_occupied, total_days, amount_charged, tax_rate, tax_amount, payment_total, notes) VALUES
+(1, 1, '2000-01-01', '1', '2000-01-01', '2000-01-01', 1, 1, 1, 1, 1, 'notes1'),
+(2, 2, '2001-01-01', '2', '2001-01-01', '2001-01-01', 2, 2, 2, 2, 2, 'notes2'),
+(3, 3, '2002-01-01', '3', '2002-01-01', '2002-01-01', 3, 3, 3, 3, 3, 'notes3');
+ 
+INSERT INTO occupancies (id, employee_id, date_occupied, account_number, room_number, rate_applied, phone_charge, notes) VALUES
+(1, 1, '2000-01-01', '1', 1,  1, 1, 'notes1'),
+(2, 2, '2001-01-01', '2', 2,  2, 2, 'notes2'),
+(3, 3, '2002-01-01', '3', 3,  3, 3, 'notes3');
+

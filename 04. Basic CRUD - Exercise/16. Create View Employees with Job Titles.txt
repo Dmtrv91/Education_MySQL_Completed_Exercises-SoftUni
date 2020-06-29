@@ -1,0 +1,5 @@
+USE soft_uni;
+
+CREATE VIEW v_employees_job_titles AS
+SELECT concat_ws(' ', e.first_name, (CASE WHEN e.middle_name IS NULL THEN '' ELSE e.middle_name END), e.last_name) AS 'full_name', e.job_title
+FROM employees AS e;

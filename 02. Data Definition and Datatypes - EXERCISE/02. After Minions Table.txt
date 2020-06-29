@@ -1,0 +1,7 @@
+USE minions;
+
+ALTER TABLE minions
+	ADD town_id INT(11);
+
+ALTER TABLE minions
+	ADD CONSTRAINT fk_towns_id FOREIGN KEY(town_id) REFERENCES towns(id);

@@ -1,0 +1,5 @@
+USE users;
+
+ALTER TABLE users MODIFY COLUMN id INT(11);
+ALTER TABLE users DROP PRIMARY KEY;
+ALTER TABLE users ADD PRIMARY KEY (id, username);

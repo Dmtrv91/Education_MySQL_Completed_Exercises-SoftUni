@@ -1,0 +1,21 @@
+CREATE DATABASE users;
+USE users;
+
+CREATE TABLE people(
+	id INT(11) PRIMARY KEY AUTO_INCREMENT,
+	name VARCHAR(200) NOT NULL,
+    picture BLOB(2048), 
+    height DOUBLE(3,2),
+    weight DOUBLE(5,2),
+    gender CHAR(1) NOT NULL,
+    birthdate DATE NOT NULL,
+    biography TEXT
+);
+
+INSERT INTO people (id, name, picture, height, weight, gender, birthdate, biography)  VALUE 
+(1, 'Pesho', NULL, 1.60, 45.0, 'm', '1991-01-01', 'az sum Pesho'),
+(2, 'Ivan', NULL, 1.70, 46.0, 'm', '1991-02-01', 'az ne sum Pesho'),
+(3, 'Sasho', NULL, 1.80, 47.0, 'm', '1991-03-01', 'az ne sum Pesho'),
+(4, 'Gosho', NULL, 1.90, 48.0, 'm', '1991-04-01', 'az ne sum Pesho'),
+(5, 'Mincho', NULL, 1.95, 49.0, 'm', '1991-05-01', 'az ne sum Pesho')
+

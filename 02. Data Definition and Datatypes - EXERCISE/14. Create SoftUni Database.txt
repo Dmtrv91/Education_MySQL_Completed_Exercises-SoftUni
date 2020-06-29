@@ -1,0 +1,37 @@
+
+CREATE DATABASE soft_uni;
+USE soft_uni;
+
+
+CREATE TABLE IF NOT EXISTS towns(
+id INT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS addresses(
+id INT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+addres_text VARCHAR(100),
+town_id INT(20)
+);
+
+
+CREATE TABLE IF NOT EXISTS departments(
+id INT(10) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+name VARCHAR(100)
+);
+
+CREATE TABLE IF NOT EXISTS employees(
+id INT(10) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+first_name VARCHAR(100), 
+middle_name VARCHAR(100), 
+last_name VARCHAR(100), 
+job_title VARCHAR(100), 
+department_id INT(20), 
+hire_date DATETIME, 
+salary DOUBLE(10,2), 
+address_id INT(20) 
+);
+
+ALTER TABLE addresses ADD CONSTRAINT fk_addresses_towns FOREIGN KEY (town_id) REFERENCES towns(id);
+ALTER TABLE employees ADD CONSTRAINT FK_address_id FOREIGN KEY (address_id) REFERENCES addresses(id);
+ALTER TABLE employees ADD CONSTRAINT FK_department_id FOREIGN KEY (department_id) REFERENCES departments (id);

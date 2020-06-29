@@ -1,0 +1,6 @@
+USE diablo;
+
+SELECT name, DATE_FORMAT(START, '%Y-%m-%d') AS start FROM games
+WHERE YEAR(start)=2011 OR YEAR(START)=2012
+ORDER BY start, name ASC
+LIMIT 50;

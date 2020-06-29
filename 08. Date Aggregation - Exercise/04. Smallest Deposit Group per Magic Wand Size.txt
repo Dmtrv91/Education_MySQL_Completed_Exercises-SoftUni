@@ -1,0 +1,11 @@
+USE gringotts; 
+
+ SELECT deposit_group FROM
+(SELECT deposit_group, AVG(magic_wand_size) AS avrage_magic_wand_size
+  FROM wizzard_deposits
+  GROUP BY deposit_group) as avgm
+  WHERE avrage_magic_wand_size = ( SELECT MIN(avrage_magic_wand_size) min_average_magic_wand_size 
+	FROM
+	(SELECT deposit_group, AVG(magic_wand_size) AS avrage_magic_wand_size
+	FROM wizzard_deposits
+	GROUP BY deposit_group) AS av);

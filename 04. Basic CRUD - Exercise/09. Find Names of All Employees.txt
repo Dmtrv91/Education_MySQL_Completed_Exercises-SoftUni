@@ -1,0 +1,5 @@
+USE soft_uni;
+
+SELECT concat_ws(' ', e.first_name, e.middle_name, e.last_name) AS 'full name'
+FROM employees AS e
+WHERE salary = 25000 OR salary = 14000 OR salary = 12500 OR salary =  23600;

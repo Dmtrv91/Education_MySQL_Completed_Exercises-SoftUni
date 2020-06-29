@@ -1,0 +1,17 @@
+USE users;
+
+CREATE TABLE users(
+	id INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+	username VARCHAR(30) NOT NULL UNIQUE,
+    password VARCHAR(26) NOT NULL,
+    profile_picture BLOB(900), 
+    last_login_time DATETIME NOT NULL,
+    is_deleted BIT
+);
+
+INSERT INTO users (id, username, password, profile_picture, last_login_time, is_deleted)  VALUE 
+(1, 'Pesho', '123', NULL, date(now()), 1),
+(2, 'Pesho2', '123', NULL, date(now()), 0),
+(3, 'Pesho3', '123', NULL, date(now()), 1),
+(4, 'Pesho4', '123', NULL, date(now()), 0),
+(5, 'Pesho5', '123', NULL, date(now()), 1);

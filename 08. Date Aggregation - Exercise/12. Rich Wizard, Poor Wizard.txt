@@ -1,0 +1,9 @@
+USE gringotts; 
+
+CREATE VIEW rw_pw AS
+SELECT w1.first_name AS host_wizzard, w1.deposit_amount AS host_wizzard_deposit
+,w2.first_name AS guest_wizzard, w2.deposit_amount AS guest_wizzard_deposit
+FROM wizzard_deposits AS w1, wizzard_deposits AS w2
+WHERE w1.id + 1 = w2.id;
+SELECT SUM(host_wizzard_deposit - guest_wizzard_deposit)
+FROM rw_pw;

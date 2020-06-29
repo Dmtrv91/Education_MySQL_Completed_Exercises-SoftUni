@@ -1,0 +1,5 @@
+USE soft_uni;
+
+SELECT*FROM towns AS t order BY t.name ;
+SELECT*FROM departments AS d order BY d.name ;
+SELECT*FROM employees order BY salary DESC;

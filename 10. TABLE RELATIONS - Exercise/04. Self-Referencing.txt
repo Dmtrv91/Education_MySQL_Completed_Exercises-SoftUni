@@ -1,0 +1,18 @@
+CREATE DATABASE new_camp;
+USE new_camp;
+
+CREATE TABLE teachers(
+teacher_id INT(11) NOT NULL,
+name VARCHAR(50) NOT NULL,
+manager_id INT(11),
+CONSTRAINT pk_teacher_id PRIMARY KEY (teacher_id),
+CONSTRAINT fk_teachers_teachers FOREIGN KEY (manager_id) REFERENCES teachers(teacher_id)
+);
+
+INSERT INTO teachers VALUES
+(101, 'John', NULL),
+(105, 'Maya', 101),
+(106, 'Silvia', 101),
+(102, 'Ted', 106),
+(103, 'Mark', 106),
+(104, 'Greta', 105);

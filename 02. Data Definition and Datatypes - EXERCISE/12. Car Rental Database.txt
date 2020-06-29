@@ -1,0 +1,85 @@
+USE car_rental;
+
+CREATE TABLE categories(
+id INT(50) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+category VARCHAR(100) NOT NULL,
+daily_rate DOUBLE(5,2) NOT NULL,
+weekly_rate DOUBLE(5,2) NOT NULL,
+monthly_rate DOUBLE(5,2) NOT NULL,
+weekend_rate DOUBLE(5,2) NOT NULL
+);
+
+CREATE TABLE cars(
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+plate_number VARCHAR(50) NOT NULL,
+make VARCHAR(100) NOT NULL,
+model VARCHAR(100) NOT NULL,
+car_year YEAR NOT NULL,
+category_id INT(50) NOT NULL,
+doors INT(10) NOT NULL,
+picture BLOB(2048),
+car_condition VARCHAR(50) NOT NULL,
+available BIT
+);
+
+CREATE TABLE employees(
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+first_name VARCHAR(100) NOT NULL,
+last_name VARCHAR(100) NOT NULL,
+title VARCHAR(100) NOT NULL,
+notes TEXT
+);
+
+CREATE TABLE customers(
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+driver_licence_number INT(50) NOT NULL,
+full_name VARCHAR(100) NOT NULL,
+address VARCHAR(100) NOT NULL,
+city VARCHAR(100) NOT NULL,
+zip_code VARCHAR(100) NOT NULL,
+notes TEXT
+);
+CREATE TABLE rental_orders(
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+employee_id INT(50) NOT NULL,
+customer_id INT(50) NOT NULL,
+car_id INT(50) NOT NULL,
+car_condition VARCHAR(50) NOT NULL,
+tank_level INT(20) NOT NULL,
+kilometrage_start INT(50) NOT NULL,
+kilometrage_end INT(50) NOT NULL,
+total_kilometrage INT(50) NOT NULL,
+start_date DATE NOT NULL,
+end_date DATE NOT NULL,
+total_days INT(50),
+rate_applied VARCHAR(50) NOT NULL,
+tax_rate VARCHAR(50) NOT NULL,
+order_status BIT,
+notes TEXT
+);
+
+INSERT INTO categories (id, category, daily_rate, weekly_rate, monthly_rate, weekend_rate)  VALUE 
+(1, 'category1', 1, 2, 3, 4),
+(2, 'category2', 2, 3, 4, 5),
+(3, 'category3', 3, 4, 5, 6);
+
+INSERT INTO cars (id, plate_number, make, model, car_year, category_id, doors, picture, car_condition, available) VALUE
+(1, 'plate_number1', 'make1','mmodel1', 2000, 1, 2, NULL, 'car_condition1', 0),
+(2, 'plate_number2', 'make2','mmodel2', 2001, 2, 3, NULL, 'car_condition2', 1),
+(3, 'plate_number3', 'make3','mmodel3', 2002, 3, 4, NULL, 'car_condition3', 0);
+
+INSERT INTO employees (id, first_name, last_name, title, notes) VALUE
+(1, 'first_name1', 'last_name1', 'title1', 'notes1'),
+(2, 'first_name2', 'last_name2', 'title2', 'notes2'),
+(3, 'first_name3', 'last_name3', 'title3', 'notes3');
+
+INSERT INTO customers (id, driver_licence_number, full_name, address, city, zip_code, notes) VALUE
+(1, 12345, 'full_name1', 'address1', 'city1', 'zip_code1', 'notes1'),
+(2, 12345, 'full_name2', 'address2', 'city2', 'zip_code2', 'notes2'),
+(3, 12345, 'full_name3', 'address3', 'city3', 'zip_code3', 'notes3');
+
+INSERT INTO rental_orders (id, employee_id, customer_id, car_id, car_condition, tank_level, kilometrage_start, kilometrage_end, total_kilometrage, start_date, end_date, total_days, rate_applied, tax_rate, order_status, notes) VALUE
+(1, 2, 3, 4, 'car_condition1', 5, 100000, 200000, 100000, '2000-01-01', '2000-02-01', 30, 'rate_applied1', 'tax_rate1', 0, 'notes1'),
+(2, 5, 6, 7, 'car_condition2', 6, 200000, 300000, 100000, '2001-01-01', '2001-02-01', 30, 'rate_applied2', 'tax_rate2', 1, 'notes2'),
+(3, 8, 9, 9, 'car_condition3', 7, 300000, 400000, 100000, '2002-01-01', '2002-02-01', 30, 'rate_applied3', 'tax_rate3', 0, 'notes3');
+
